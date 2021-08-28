@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "ajv": "^6.12.6",
+    "eslint": "^7.13.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "express": "^4.17.1",
+    "msgpack-lite": "^0.1.26",
+    "redis": "^3.0.2",
+    "standard": "^16.0.3",
+    "uuid": "^8.3.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

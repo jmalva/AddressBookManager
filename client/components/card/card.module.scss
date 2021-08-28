@@ -1,0 +1,12 @@
+.card {
+  color: var(--color-graymidnight);
+  padding: 16px;
+  box-shadow: var(--box-shadow);
+  margin: 24px 0;
+  &__edit {
+    display: none;
+    &--visible {
+      display: block;
+    }
+  }
+}

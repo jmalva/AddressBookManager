@@ -1,0 +1,32 @@
+version: "3.3"
+services:
+  redis:
+    image: "redis:3.2"
+    expose:
+      - "6379"
+  server:
+    build:
+      context: ./
+      dockerfile: Dockerfile.server
+    depends_on:
+      - redis
+    volumes:
+      - ./server/:/app/
+      - /app/node_modules
+    env_file:
+      - server.env
+    ports:
+      - "3001:3001"
+    command: npx nodemon server.js
+  client:
+    build:
+      context: ./
+      dockerfile: Dockerfile.client
+    volumes:
+      - ./client/:/app/
+      - /app/node_modules
+    env_file:
+      - client.env
+    ports:
+      - "3000:3000"
+    command: npm run dev

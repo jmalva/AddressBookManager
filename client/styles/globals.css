@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+:root {
+  --color-white: #ffffff;
+  --color-cobalt: #1878E0;
+  --color-cerulean: #0099D7;
+  --color-gray: #F8F9FA;
+  --color-grayfog: #EBEFF6;
+  --color-graydove: #C5D6E6;
+  --color-graymidnight: #324350;
+  --color-grayshadow50: #416581;
+  --color-graysteel: #5F83A5;
+  --color-grayblue: #EAF0F7;
+  --color-error: #FF9E98;
+  --color-error-dark: #F76E40;
+  --box-shadow: 0px 5px 14px rgba(44, 67, 81, 0.13), 0px 0px 4px rgba(44, 67, 81, 0.02);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}

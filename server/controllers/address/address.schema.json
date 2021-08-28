@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "examples": ["addr_2e72f1f3-253b-4544-a1df-a4f504ba7e43"]
+    },
+    "line1": {
+      "type": "string",
+      "examples": ["210 King St."]
+    },
+    "line2": {
+      "type": "string",
+      "examples": ["#3"]
+    },
+    "city": {
+      "type": "string",
+      "examples": ["San Francisco"]
+    },
+    "state": {
+      "type": "string",
+      "examples": ["CA"],
+      "pattern": "^\\S{2}$"
+    },
+    "zip": {
+      "type": "string",
+      "examples": ["94107"],
+      "pattern": "^\\d{5}$"
+    }
+  },
+  "required": ["id", "line1", "city", "state", "zip"],
+  "additionalProperties": false
+}

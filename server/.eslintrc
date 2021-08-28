@@ -1,0 +1,27 @@
+{
+  "env": {"mocha": true, "node": true, "es6": true },
+  "extends": ["standard", "plugin:node/recommended"],
+  "rules": {
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "always-multiline"
+    }],
+    "no-console": "error",
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
+    "space-in-parens": ["error", "always", { "exceptions": ["{}", "[]"] }],
+    "array-bracket-spacing": ["error", "always", { "objectsInArrays": false }],
+    "object-curly-spacing": ["error", "always"],
+    "semi": ["error", "always"],
+    "arrow-parens": "error",
+    "quotes": ["error", "single"],
+    "no-shadow": "error",
+    "no-var": 2
+  }
+}
