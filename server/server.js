@@ -10,8 +10,11 @@ app.get( '/address-book/:id', async ( req, res ) => {
   let addrId = req.params.id;
   try {
     const getAddress = await addressController.get(addrId);
-    res.status(200).json(getAddress);//still sends even if id not found
-
+    if (!getAddress){
+      res.status(404).json({err: "ID not found"});
+    }
+    res.status(200).json(getAddress); 
+    
   } catch (error) {
     res.send(error);
   }
@@ -30,5 +33,24 @@ app.post( '/address-book', async (req, res) => {
 });
 
 //update an address
+
+// delete an address
+app.delete('/address-book/:id', async (req, res) => {
+  let addrId = req.params.id;
+  console.log(addrId)
+  try {
+    const addr = await addressController.get(addrId);
+    if (!addr){
+      res.status(404).json({error: "ID not found."});
+    }
+    else{
+      const deleteAddr = await addressController.delete(addrId);
+      res.status(200).json({msg: "Address deleted."});
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 
 app.listen( process.env.PORT );
