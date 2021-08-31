@@ -4,12 +4,36 @@ const { serialize, deserialize } = require( '../../utils/message-pack' );
 const uuid = require( 'uuid' ).v4;
 
 const redis = require( '../../singletons/redis' );
+const addressList = require('../../data/addresses.json');
+
 const ADDRESSES = 'addresses';
 
 // eslint-disable-next-line
 const log = console.log;
 
 module.exports = {
+  async display () {
+    log( 'displaying all addresses');
+    const addresses = await redis.HGETALL( ADDRESSES)
+
+    // if empty populate with data
+    if (!addresses){
+      log( 'populating empty db with data')
+      for (var data in addressList){
+        // log(addressList[data])
+        this.add(addressList[data])
+      }
+    }
+    else{
+      // deserialize addresses
+      for (var key in addresses) {
+        addresses[key] = await this.get(key)
+      }
+    }
+    // log("Addresses:",addresses)
+    return Object.values(addresses);
+  },
+
   async add( address ) {
     const id = 'addr_' + uuid();
 
@@ -29,7 +53,7 @@ module.exports = {
 
   async update( id, newData ) {
     log( 'updating', id );
-
+    // log(newData)
     validate( addressSchema, newData );
 
     await redis.HSET( ADDRESSES, id, serialize( newData ) );
@@ -45,7 +69,10 @@ module.exports = {
     log( 'getting', id );
 
     const res = await redis.HGET( ADDRESSES, id );
-    if ( !res ) return;
+    if ( !res ) {
+      // console.log()
+      return;
+    }
     return deserialize( res );
   },
 
