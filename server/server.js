@@ -1,14 +1,14 @@
 const express = require( 'express' );
 const addressController = require('./controllers/address/index');
-const redis = require('./singletons/redis');
-const redis1 = require('./integrations/redis');
+var cors = require('cors');
 
 const app = express();
 // to read JSON
 app.use(express.json());
+// allow cross origin requests..
+app.use(cors());
 
 
-const ADDRESSES = 'addresses';
 
 
 // get all 
@@ -95,6 +95,9 @@ app.delete('/address-book/:id', async (req, res) => {
 });
 
 //search 
-app.get('/address-book', (req,res) =>{});
+app.get('/address-book/search', (req,res) =>{
+  // 
+  console.log(req.params.query)
+});
 
 app.listen( process.env.PORT );
