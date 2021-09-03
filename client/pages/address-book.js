@@ -4,6 +4,7 @@ import Input from '../components/input/input'
 import Card from '../components/card/card'
 import Button from '../components/button/button'
 
+import Contacts from '../components/contacts/contacts'
 import { useState,useEffect } from 'react'
 
 export default function Home(  ) {
@@ -11,6 +12,7 @@ export default function Home(  ) {
   // get all cards
   const [cards, getCards] = useState([]);
   // const [cards, getCards] = useState({addresses: []}); //original
+  const [editOpen, setEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
   useEffect( () =>{
@@ -19,35 +21,30 @@ export default function Home(  ) {
       const res = await fetch("http://localhost:3001/address-book/");
       // {params: {query: 'asdasd'}}); //for search
       const jsonData = await res.json();
-    
       getCards(jsonData);
     };
+
     fetchData();
     setIsLoading(false);
-    console.log("after fetch:", cards)
+    // console.log("after fetch:", cards)
   }, []);
-
-  const Contacts = () =>{
-   return( 
-     <>
-       {isLoading ? <div>Loading..</div> : cards?.map((item, index) => {
-         let line2 = item.line1;
-         if (item.line2) {
-          //  to replace the suite with #
-           line2 +=  item.line2.replace(/[^0-9]+/g, " #"); 
-         }
-
-         return (
-           <Card editState={false}>
-             <p>User Name</p>
-             <p>{` ${line2}, ${item.city}, ${item.zip}`}</p>
-           </Card>
-         )
-       }
-       )}
-     </>
-      )
-    }
+  // to toggle states
+ 
+  // to delete cards
+  function handleRemove(id) {
+    const newList = cards.filter((item) => item.id !== id);
+    getCards(newList);
+  }
+  
+  // to edit cards
+  function editCard (id) {
+    const card = cards.filter((item) => item.id === id);
+    console.log(card)
+    toggle();
+    console.log("changed state->",editOpen)
+    // getCards(newList);
+  }
+  
       
   return (
     <Layout home>
@@ -67,17 +64,17 @@ export default function Home(  ) {
         </Card>
 
         {/* my list of contacts */}
-        <Contacts />
+        <Contacts cards={cards} isLoading={isLoading} edit={editCard} editState={editOpen} onRemove={handleRemove} />
         
 
-        <Card editState={true}>
+        {/* <Card editState={true}>
           <p>Harry Lobster</p>
           <p>185 Berry St #6100, San Francisco, CA 94107</p>
-        </Card>
-        <Card>
+        </Card> */}
+        {/* <Card>
           <p>Harry Lobster</p>
           <p>185 Berry St #6100, San Francisco, CA 94107</p>
-        </Card>
+        </Card> */}
       </div>
     </Layout>
   )

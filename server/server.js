@@ -40,12 +40,14 @@ app.get( '/address-book/:id', async ( req, res ) => {
 
 // add an address
 app.post( '/address-book', async (req, res) => {
-  let address = { line1: req.body.line1, city: req.body.city, state: req.body.state, zip: req.body.zip};
+  console.log("Body:", req.body)
+  let address = req.body.line2 ? { line1: req.body.line1, line2: req.body.line2, city: req.body.city, state: req.body.state, zip: req.body.zip }: { line1: req.body.line1, city: req.body.city, state: req.body.state, zip: req.body.zip};
   try {
     let addrId = await addressController.add(address); //returns ID
     const addrData = await addressController.get( addrId);
     res.send({'new address id':addrId})
   } catch (err) {
+
     res.status(400).json(err);
   }
 });

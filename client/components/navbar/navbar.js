@@ -23,6 +23,7 @@ export default function Navbar({children}) {
           <ul>
             {links.map(({href, label, icon }) => (
               <Navlinks
+                key={label}
                 href={href}
                 label={label}
                 icon={icon}
