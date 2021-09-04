@@ -8,14 +8,9 @@ app.use(express.json());
 // allow cross origin requests..
 app.use(cors());
 
-
-
-
-
-
 // get all 
 app.get('/address-book', async (req, res) => {
-  
+
   try {
     const addressList = await addressController.display();
     res.send(addressList);
@@ -42,38 +37,46 @@ app.get( '/address-book/:id', async ( req, res ) => {
 
 // add an address
 app.post( '/address-book', async (req, res) => {
-  console.log("Body:", req.body)
-  let address = req.body.line2 ? { line1: req.body.line1, line2: req.body.line2, city: req.body.city, state: req.body.state, zip: req.body.zip }: { line1: req.body.line1, city: req.body.city, state: req.body.state, zip: req.body.zip};
+  // console.log("Body:", req.body)
+  let address = 
+  { 
+    line1: req.body.line1,
+    // line2: req.body?.line2,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip 
+  };
+  if (req.body.line2) address.line2 = req.body.line2;
+
   try {
     let addrId = await addressController.add(address); //returns ID
     const addrData = await addressController.get( addrId);
-    res.send({'new address id':addrId})
+    res.send(addrData); //send this data + new ID back to front-end
   } catch (err) {
-
     res.status(400).json(err);
   }
 });
 
 //update an address
 app.put('/address-book/:id', async (req, res) => {
+  // console.log("Body:", req.body)
+
   let addrId = req.params.id;
-  // construct address from form fields
-  const address = { 
-    line1: req.body.line1, 
-    city: req.body.city, 
-    state: req.body.state, 
-    zip: req.body.zip 
+  const address =
+  {
+    line1: req.body.line1,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip,
+    id: req.body.id,
   };
-  // new variables
+  // if it exists add to address
+  if (req.body.line2) address.line2 = req.body.line2;
  
   try {
     // update address
-    await addressController.update( addrId, {
-      ...address,
-      id: addrId,
-    });
+    await addressController.update( addrId, {...address});
     const addr = await addressController.get(addrId);
-    // res.send({msg: "Address updated.", addr});
     res.status(200).json(addr);
     
   } catch (error) {

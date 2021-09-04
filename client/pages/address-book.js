@@ -5,15 +5,13 @@ import Card from '../components/card/card'
 import Button from '../components/button/button'
 
 import Contacts from '../components/contacts/contacts'
-import { deleteAddress, saveAddress} from '../components/functions/functions'
+import { deleteAddress} from '../components/functions/functions'
 import { useState,useEffect } from 'react'
 
 export default function Home(  ) {
 
   // get all cards
   const [cards, setCards] = useState([]);
-  // const [cards, setCards] = useState({addresses: []}); //original
-  const [editOpen, setEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
   useEffect( () =>{
@@ -45,14 +43,7 @@ export default function Home(  ) {
     setCards(newList);
   }
   
-  // to edit cards
-  function editCard (id) {
-    const card = cards.filter((item) => item.id === id);
-    console.log(card)
-    toggle();
-    console.log("changed state->",editOpen)
-    // setCards(newList);
-  }
+
   
       
   return (
@@ -73,17 +64,8 @@ export default function Home(  ) {
         </Card>
 
         {/* my list of contacts */}
-        <Contacts cards={cards} isLoading={isLoading} edit={editCard} editState={editOpen} onRemove={handleRemove} />
+        <Contacts cards={cards} isLoading={isLoading} onRemove={handleRemove} />
         
-
-        {/* <Card editState={true}>
-          <p>Harry Lobster</p>
-          <p>185 Berry St #6100, San Francisco, CA 94107</p>
-        </Card> */}
-        {/* <Card>
-          <p>Harry Lobster</p>
-          <p>185 Berry St #6100, San Francisco, CA 94107</p>
-        </Card> */}
       </div>
     </Layout>
   )

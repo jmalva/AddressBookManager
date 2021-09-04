@@ -4,21 +4,13 @@ import Input from '../input/input'
 import { AddForm, EditForm} from '../functions/functions'
 import { useCallback, useState } from 'react'
 
-export default function Card({children, editState, addState, onAdd, toggleEdit, onRemove, data}) {
+export default function Card({children, editState, addState, onAdd, toggleEdit, onRemove, data, onEdit}) {
   const [isAddOpen, setAddOpen] = useState(false); //toggle addForm
   function toggleAdd() {
     setAddOpen(!isAddOpen);
   }
-  const [newAdd, setNewAdd] = useState({
-    line1: "",
-    line2: "",
-    city: "",
-    state: "",
-    zip: ""
-  });
+
   const handleNewAddress = (data) =>{
-    // setNewAdd
-    console.log("the data in handlenewadd:",data)
     // update the state in the parent..
     onAdd(data);
   }
@@ -44,7 +36,7 @@ export default function Card({children, editState, addState, onAdd, toggleEdit, 
     </div>
     {/* toggleEdit = toggles edit */}
     {editState &&
-     <EditForm show={editState} styles={styles} data={data} id={data.id} toggle={toggleEdit}/>
+     <EditForm show={editState} styles={styles} data={data} id={data.id} toggle={toggleEdit} onEditSave={onEdit}/>
      }
     
     {addState && <AddForm show={isAddOpen} styles={styles} toggle={toggleAdd} onAdd={handleNewAddress} />}
