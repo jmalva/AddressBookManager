@@ -30,7 +30,6 @@ module.exports = {
         addresses[key] = await this.get(key)
       }
     }
-    // log("Addresses:",addresses)
     return Object.values(addresses);
   },
 
@@ -53,9 +52,8 @@ module.exports = {
 
   async update( id, newData ) {
     log( 'updating', id );
-    // log(newData)
     validate( addressSchema, newData );
-
+    
     await redis.HSET( ADDRESSES, id, serialize( newData ) );
   },
 
@@ -69,10 +67,8 @@ module.exports = {
     log( 'getting', id );
 
     const res = await redis.HGET( ADDRESSES, id );
-    if ( !res ) {
-      // console.log()
-      return;
-    }
+    if ( !res ) return;
+    
     return deserialize( res );
   },
 

@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 // get all 
-app.get('/address-book', async (req, res) => {
+app.get('/address-book/', async (req, res) => {
 
   try {
     const addressList = await addressController.display();
@@ -102,9 +102,17 @@ app.delete('/address-book/:id', async (req, res) => {
 });
 
 //search 
-app.get('/address-book/search', (req,res) =>{
-  // 
-  console.log(req.params.query)
+
+app.get('/search', async (req,res) =>{
+  const search = req.query.q;
+  try {
+    const results = await addressController.search(search)
+    res.send(results);
+  } catch (error) {
+    res.send(error);
+    
+  }
+ 
 });
 
 app.listen( process.env.PORT );

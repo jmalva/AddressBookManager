@@ -7,19 +7,24 @@ import Button from '../components/button/button'
 import Contacts from '../components/contacts/contacts'
 import { deleteAddress} from '../components/functions/functions'
 import { useState,useEffect } from 'react'
-
+/***
+ * To implement search I would use a GET request using the url "localhost:3001/search?q='search'", where 'search' is some string returned by the search Input component. Then I would use setCards to display only the results of search. If search returns 0 results then I would use a snackbar message or div to tell the user there was nothing associated with that search term.
+ * Alternatively, I could create a separate page to display all the results from search.
+ * 
+ * If I had more time, I would create an entry for userName in the redis database and on the frontend.
+ * And use pagination to return all these results.
+ * ***/
 export default function Home(  ) {
 
   // get all cards
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   useEffect( () =>{
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch("http://localhost:3001/address-book",);
-        // {params: {query: 'asdasd'}}); //for search
+        const res = await fetch("http://localhost:3001/address-book/",);
         const jsonData = await res.json();
         setCards(jsonData);
       } catch (error) {
@@ -30,7 +35,6 @@ export default function Home(  ) {
     fetchData();
     setIsLoading(false);
   }, []);
-  // to toggle states
  
   // to add a card 
   const handleAdd = async (data) =>{

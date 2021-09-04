@@ -72,7 +72,7 @@ export const AddForm = ({show, styles, toggle, onAdd}) =>{
         <Input label={"Street Line2:"} placeholder={"ex: Suite 105"}
           func={handleInputChange} name="line2"></Input>
         <Input label={"City:"} func={handleInputChange} name="city" placeholder={"ex: San Francisco"}></Input>
-        <Input label="State:" name="state" placeholder={"ex: CA"} func={handleInputChange}/>
+        <Input label="State:" name="state" placeholder={"ex: CA"} func={handleInputChange} maxL={2}/>
         <Input label={"Zip:"} placeholder={"ex: 94107"} func={handleInputChange} name="zip" maxL={5}></Input>
         {/* send post request */}
         <Button variant="primary" func={saveAddress}>Save</Button>
