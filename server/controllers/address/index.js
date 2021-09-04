@@ -14,7 +14,7 @@ const log = console.log;
 module.exports = {
   async display () {
     log( 'displaying all addresses');
-    const addresses = await redis.HGETALL( ADDRESSES)
+    var addresses = await redis.HGETALL( ADDRESSES)
 
     // if empty populate with data
     if (!addresses){
@@ -23,6 +23,7 @@ module.exports = {
         // log(addressList[data])
         this.add(addressList[data])
       }
+      addresses = await redis.HGETALL( ADDRESSES);
     }
     else{
       // deserialize addresses

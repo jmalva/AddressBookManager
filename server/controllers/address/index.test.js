@@ -10,6 +10,22 @@ describe( 'address controller', () => {
     assert( addr.id.match( 'addr_' ), 'address should have had an ID' );
   });
 
+  it( 'grabs all addresses', async () => {
+    const addrId1 = await addressController.add({ line1: '185 Berry St', city: 'San Francisco', state: 'CA', zip: '94107' });
+    const addrId2 = await addressController.add({ line1: '200 Tooth St', city: 'San Pablo', state: 'CA', zip: '94509' });
+
+    // const addr = await addressController.get( addrId );
+    const all = await addressController.display();
+    assert.equal( all.length, 2);
+  });
+
+  it( 'generates and displays all addresses', async () => {
+  
+  const all = await addressController.display();
+  assert.equal(all.length, 8);
+});
+
+
   it( 'lets us update an address', async () => {
     const address = { line1: '185 Berry St', city: 'San Francisco', state: 'CA', zip: '94107' };
     const NEW_CITY = 'South San Francisco';
@@ -25,6 +41,37 @@ describe( 'address controller', () => {
     assert.strictEqual( addr.city, NEW_CITY );
   });
 
+  it('lets us update an address with a 2nd line', async () => {
+    const address = { line1: '185 Berry St', city: 'San Francisco', state: 'CA', zip: '94107' };
+    const new_line2 = 'Suite 400';
+    const addrId = await addressController.add(address);
+
+    await addressController.update(addrId, {
+      ...address,
+      id: addrId,
+      line2: new_line2,
+    });
+
+    const addr = await addressController.get(addrId);
+    assert.strictEqual(addr.line2, new_line2);
+  });
+  it('update an address without 2nd line', async () => {
+    const address = { line1: '185 Berry St', line2: 'suite 400', city: 'San Francisco', state: 'CA', zip: '94107' };
+    const addrId = await addressController.add(address);
+    
+    await addressController.update(addrId, {
+      line1: '185 Berry St', city: 'San Francisco', state: 'CA', zip: '94107',
+      id: addrId,
+    });
+    
+    const expected = { line1: '185 Berry St', city: 'San Francisco', state: 'CA', zip: '94107',id: addrId };
+
+    const addr = await addressController.get(addrId);
+    assert.deepStrictEqual(addr, expected);
+  });
+
+
+ 
   it( 'lets us delete an address', async () => {
     const addrId = await addressController.add({ line1: '185 Berry St', city: 'San Francisco', state: 'CA', zip: '94107' });
     await addressController.delete( addrId );
