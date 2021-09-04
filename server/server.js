@@ -1,12 +1,14 @@
 const express = require( 'express' );
 const addressController = require('./controllers/address/index');
-var cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 // to read JSON
 app.use(express.json());
 // allow cross origin requests..
 app.use(cors());
+
+
 
 
 

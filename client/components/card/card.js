@@ -1,28 +1,28 @@
 import styles from './card.module.scss'
 import Button from '../button/button'
 import Input from '../input/input'
-import {deleteButton, AddForm, EditCard} from '../functions/functions'
+import { AddForm, EditForm} from '../functions/functions'
 import { useCallback, useState } from 'react'
 
-export default function Card({children, editState, addState, onAdd, onEdit, onRemove, data}) {
+export default function Card({children, editState, addState, onAdd, toggleEdit, onRemove, data}) {
   const [isAddOpen, setAddOpen] = useState(false); //toggle addForm
   function toggleAdd() {
     setAddOpen(!isAddOpen);
   }
-
-  // handle data for edit state
-  const initialData = (!editState && addState) ? {
-      userName: "",
-      line1: "",
-      line2: "",
-      city: "",
-      zip: ""
-    } : data;
-    // console.log("ITEM=",initialData)
+  const [newAdd, setNewAdd] = useState({
+    line1: "",
+    line2: "",
+    city: "",
+    state: "",
+    zip: ""
+  });
+  const handleNewAddress = (data) =>{
+    // setNewAdd
+    console.log("the data in handlenewadd:",data)
+    // update the state in the parent..
+    onAdd(data);
+  }
   
-  const [cardData, setCardData] = useState(initialData);
-  
-
   return (
   <div className={styles.card}>
     <div className={`flex flex-wrap justify-between items-center`}>
@@ -34,25 +34,20 @@ export default function Card({children, editState, addState, onAdd, onEdit, onRe
             <Button variant="secondary" func={toggleAdd}>Add Address</Button>
         : 
           <>
-            <Button variant="secondary" func={onEdit}>Edit</Button>
+            <Button variant="secondary" func={toggleEdit}>Edit</Button>
               <Button variant="error" func={() => {
-                onRemove(data.id),
-                deleteButton(data.id)}}>Delete</Button>
+                onRemove(data.id)
+                }}>Delete</Button>
           </>
         }
       </div>
     </div>
-    <div className={`border-2 border-purple p-8 mt-8 w-full md:w-1/2 ${editState ? styles['card__edit--visible']: styles['card__edit']}`}>
-      <form>
-        <Input label="Line 1" 
-        value={cardData.line1}
-        ></Input>
-        <Input label="City"></Input>
-        <Input label="Zip"></Input>
-        <Button variant="primary">Save</Button>
-      </form>
-    </div>
-    {addState && <AddForm show={isAddOpen} styles={styles}/>}
+    {/* toggleEdit = toggles edit */}
+    {editState &&
+     <EditForm show={editState} styles={styles} data={data} id={data.id} toggle={toggleEdit}/>
+     }
+    
+    {addState && <AddForm show={isAddOpen} styles={styles} toggle={toggleAdd} onAdd={handleNewAddress} />}
   </div>
   )
 }

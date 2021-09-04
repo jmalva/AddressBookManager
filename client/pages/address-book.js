@@ -5,35 +5,44 @@ import Card from '../components/card/card'
 import Button from '../components/button/button'
 
 import Contacts from '../components/contacts/contacts'
+import { deleteAddress, saveAddress} from '../components/functions/functions'
 import { useState,useEffect } from 'react'
 
 export default function Home(  ) {
 
   // get all cards
-  const [cards, getCards] = useState([]);
-  // const [cards, getCards] = useState({addresses: []}); //original
+  const [cards, setCards] = useState([]);
+  // const [cards, setCards] = useState({addresses: []}); //original
   const [editOpen, setEditOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
   useEffect( () =>{
     const fetchData = async () => {
       setIsLoading(true);
-      const res = await fetch("http://localhost:3001/address-book/");
-      // {params: {query: 'asdasd'}}); //for search
-      const jsonData = await res.json();
-      getCards(jsonData);
+      try {
+        const res = await fetch("http://localhost:3001/address-book",);
+        // {params: {query: 'asdasd'}}); //for search
+        const jsonData = await res.json();
+        setCards(jsonData);
+      } catch (error) {
+        console.log(error.message)
+      }
     };
 
     fetchData();
     setIsLoading(false);
-    // console.log("after fetch:", cards)
   }, []);
   // to toggle states
  
+  // to add a card 
+  const handleAdd = async (data) =>{
+    setCards((cards) => [...cards, data])
+  };
   // to delete cards
-  function handleRemove(id) {
+  const handleRemove = async (id) => {
+    const status = await deleteAddress(id);
     const newList = cards.filter((item) => item.id !== id);
-    getCards(newList);
+    setCards(newList);
   }
   
   // to edit cards
@@ -42,7 +51,7 @@ export default function Home(  ) {
     console.log(card)
     toggle();
     console.log("changed state->",editOpen)
-    // getCards(newList);
+    // setCards(newList);
   }
   
       
@@ -59,7 +68,7 @@ export default function Home(  ) {
         ></Input>
       </div>
       <div className="mt-10">
-        <Card editState={false} addState={true}>
+        <Card editState={false} addState={true} onAdd={handleAdd}>
           <p className="text-lg">Add a new user's address</p>
         </Card>
 
