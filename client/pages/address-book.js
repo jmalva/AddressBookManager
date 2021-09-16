@@ -19,6 +19,8 @@ export default function Home(  ) {
   // get all cards
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState("");
+
 
   useEffect( () =>{
     const fetchData = async () => {
@@ -46,6 +48,22 @@ export default function Home(  ) {
     const newList = cards.filter((item) => item.id !== id);
     setCards(newList);
   }
+ 
+  const handleSearch = async (e) =>{
+    e.preventDefault();
+    console.log('after: ', search)
+    searchAddress(search);
+  };
+  const searchAddress = async (searchTerm) => {
+    
+    try {
+      const res = await fetch(`http://localhost:3001/search?q=${searchTerm}`);
+      const jsonData = await res.json();
+      setCards(jsonData);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   
 
   
@@ -57,10 +75,14 @@ export default function Home(  ) {
       </Head>
       <h1 className="mb-8">Address Book</h1>
       <div className="w-full md:w-1/2">
+        <form className="search-bar">
         <Input
           icon="icon-search.svg"
-          label="HELLO"
-        ></Input>
+          label="Search"
+          func={e => {setSearch(e.target.value); }}
+          ></Input>
+          <button type="submit" onClick={handleSearch}></button>
+          </form>
       </div>
       <div className="mt-10">
         <Card editState={false} addState={true} onAdd={handleAdd}>

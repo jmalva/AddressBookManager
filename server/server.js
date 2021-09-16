@@ -110,9 +110,7 @@ app.get('/search', async (req,res) =>{
     res.send(results);
   } catch (error) {
     res.send(error);
-    
   }
- 
 });
 
 app.listen( process.env.PORT );

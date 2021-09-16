@@ -39,3 +39,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.search-bar {
+  margin-bottom: -4rem;
+}
