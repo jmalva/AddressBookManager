@@ -40,6 +40,7 @@ app.post( '/address-book', async (req, res) => {
   // console.log("Body:", req.body)
   let address = 
   { 
+    userName: req.body.userName,
     line1: req.body.line1,
     // line2: req.body?.line2,
     city: req.body.city,
@@ -64,6 +65,7 @@ app.put('/address-book/:id', async (req, res) => {
   let addrId = req.params.id;
   const address =
   {
+    userName: req.body.userName,
     line1: req.body.line1,
     city: req.body.city,
     state: req.body.state,

@@ -15,14 +15,14 @@ const AddressCard  = ({data, remove}) =>{
   const handleEdit = () => {
     setEdit(!edit);
   };
-
+ 
   let line2 = newData.line1;
   //  to replace the suite with #
   if (newData.line2) line2 += " #"+ newData.line2.replace(/[^0-9]+/g, "");
   
   return(
     <Card editState={edit} data={newData} toggleEdit={handleEdit} onRemove={remove} onEdit={saveValue}>
-      <p>User Name</p>
+      <p>{newData.userName}</p>
       <p>{` ${line2}, ${newData.city}, ${newData.state} ${newData.zip}`}</p>
     </Card>
   );

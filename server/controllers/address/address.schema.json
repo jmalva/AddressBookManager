@@ -5,6 +5,10 @@
       "type": "string",
       "examples": ["addr_2e72f1f3-253b-4544-a1df-a4f504ba7e43"]
     },
+    "userName":{
+      "type": "string",
+      "examples": ["Joe Schmogan"]
+    },
     "line1": {
       "type": "string",
       "examples": ["210 King St."]
@@ -28,6 +32,6 @@
       "pattern": "^\\d{5}$"
     }
   },
-  "required": ["id", "line1", "city", "state", "zip"],
+  "required": ["id","userName", "line1", "city", "state", "zip"],
   "additionalProperties": false
 }

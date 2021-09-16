@@ -51,7 +51,6 @@ export default function Home(  ) {
  
   const handleSearch = async (e) =>{
     e.preventDefault();
-    console.log('after: ', search)
     searchAddress(search);
   };
   const searchAddress = async (searchTerm) => {

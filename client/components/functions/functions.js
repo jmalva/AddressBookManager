@@ -18,7 +18,7 @@ export const deleteAddress = async (id) => {
 // a form that lets us add a new address
 export const AddForm = ({show, styles, toggle, onAdd}) =>{
   const initialAddress = {
-    // userName: "",
+    userName: "",
     line1: "",
     line2: "",
     city: "",
@@ -36,8 +36,8 @@ export const AddForm = ({show, styles, toggle, onAdd}) =>{
   // sends POST request to add a new address
   const saveAddress = async (event) => {
     event.preventDefault();
-    // userName: address.userName,
     var data = {
+      userName: address.userName,
       line1: address.line1,
       // line2: address.line2,
       city: address.city,
@@ -63,9 +63,10 @@ export const AddForm = ({show, styles, toggle, onAdd}) =>{
   return (
     <div className={`border-2 border-purple p-8 mt-8 w-full md:w-1/2 ${show ? styles['card__edit--visible'] : styles['card__edit']}`}>
       <form>
-        {/* <Input label={'Name:'} placeholder={"ex: Jane Doe"} name="userName"
-        // func={handleInputChange}
-        ></Input> */}
+        <Input label={'Name:'} placeholder={"ex: Jane Doe"} name="userName"
+          func={handleInputChange}
+          name="userName"
+        ></Input>
         <Input label={"Street:"} placeholder={"ex: 185 Berry Dr."}
           func={handleInputChange} name="line1"
         />
@@ -84,6 +85,7 @@ export const AddForm = ({show, styles, toggle, onAdd}) =>{
 
 export const EditForm = ({show, styles, data, id, toggle, onEditSave}) =>{
   var originalData = {
+    userName: data.userName,
     line1: data.line1,
     line2: data?.line2 || "",
     city: data.city,
@@ -105,6 +107,7 @@ export const EditForm = ({show, styles, data, id, toggle, onEditSave}) =>{
     // change the value of card
    
     const newData = {
+      userName: address.userName,
       line1: address.line1,
       city: address.city,
       state: address.state,
@@ -129,6 +132,12 @@ export const EditForm = ({show, styles, data, id, toggle, onEditSave}) =>{
   return(
     <div className={`border-2 border-purple p-8 mt-8 w-full md:w-1/2 ${show ? styles['card__edit--visible'] : styles['card__edit']}`}>
       <form>
+        <Input
+          label="Name:"
+          name="userName"
+          placeholder={address.userName}
+          func={handleInputChange}
+          />
         <Input 
           label="Address Line 1:"
           name="line1"
