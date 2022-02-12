@@ -41,12 +41,17 @@ module.exports = {
       ...address,
       id,
     };
+try {
+  validate( addressSchema, withId );
+  await redis.HSET( ADDRESSES, withId.id, serialize( withId ) );
+  return id;
+  
+} catch (error) {
+  log(error)
+  return -1;
+}
 
-    validate( addressSchema, withId );
 
-    await redis.HSET( ADDRESSES, withId.id, serialize( withId ) );
-
-    return id;
   },
 
   async update( id, newData ) {

@@ -9,8 +9,7 @@ export default function Home( {} ) {
         <title>Overview</title>
       </Head>
       <h1>Overview</h1>
-      <p>Welcome to your Lob full-stack take home challenge!</p>
-      <p>Please head over to <Link href="/address-book"><a className="underline">Address book</a></Link> to get started</p>
+      <p>Please click on Logo or <Link href="/address-book"><a className="underline">here</a></Link> to view!</p>
     </Layout>
   )
 }

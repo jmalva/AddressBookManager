@@ -18,42 +18,55 @@ export const deleteAddress = async (id) => {
 // a form that lets us add a new address
 export const AddForm = ({show, styles, toggle, onAdd}) =>{
   const initialAddress = {
-    userName: "",
-    line1: "",
-    line2: "",
-    city: "",
-    state: "",
-    zip: ""
+    userName: undefined,
+    line1: undefined,
+    line2: undefined,
+    city: undefined,
+    state: undefined,
+    zip: undefined
   };
-  const [address, setAddress] = useState(initialAddress); //to change initialAddress
-
+  const [address, setAddress] = useState({}); //to change initialAddress
   // tracks the values of the input, sets state for changes
   const handleInputChange = event => {
     const { name, value } = event.target;
+    console.log('value',value)
     setAddress({ ...address, [name]: value });
+    
   };
-
+  
   // sends POST request to add a new address
   const saveAddress = async (event) => {
     event.preventDefault();
-    var data = {
-      userName: address.userName,
-      line1: address.line1,
-      // line2: address.line2,
-      city: address.city,
-      state: address.state,
-      zip: address.zip
-    };
-    if (address.line2) data.line2 = address.line2;
+    // var data = {
+    //   userName: address.userName,
+    //   line1: address.line1,
+    //   // line2: address.line2,
+    //   city: address.city,
+    //   state: address.state,
+    //   zip: address.zip
+    // };
+    var data = address;
+    console.log('inside addform', address,data)
+
+    if (address.line2 && address.line1) data.line2 = address.line2;
     try {
+      if (data.city.length === 0 || data.line1.length === 0 || data.zip.length < 4 || data.state < 2){
+        // console.error(err);
+        console.log(data.line1,data.city,data,address)
+        return;
+      }
       const addNew = await fetch('http://localhost:3001/address-book/', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      console.log(addNew)
       const addrID = await addNew.json(); //get address w/ ID
-      onAdd(addrID); // adds new card to hook
-      toggle();
+      if(addrID){
+        console.log(addrID)
+        onAdd(addrID); // adds new card to hook
+        toggle();
+      }
     } catch (err) {
       console.error(err);
     }

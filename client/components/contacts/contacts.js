@@ -20,10 +20,19 @@ const AddressCard  = ({data, remove}) =>{
   //  to replace the suite with #
   if (newData.line2) line2 += " #"+ newData.line2.replace(/[^0-9]+/g, "");
   
-  return(
-    <Card editState={edit} data={newData} toggleEdit={handleEdit} onRemove={remove} onEdit={saveValue}>
-      <p>{newData.userName}</p>
-      <p>{` ${line2}, ${newData.city}, ${newData.state} ${newData.zip}`}</p>
+  return (
+    <Card
+      editState={edit}
+      data={newData}
+      toggleEdit={handleEdit}
+      onRemove={remove}
+      onEdit={saveValue}
+    >
+      <h3>{newData.userName}</h3>
+      <div className="max-w-md ">
+        {/* <div> */}
+        <p className="flow-text break-words">{` ${line2}, ${newData.city}, ${newData.state} ${newData.zip}`}</p>
+      </div>
     </Card>
   );
 };

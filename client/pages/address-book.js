@@ -1,97 +1,110 @@
 import Head from 'next/head'
 import Layout from '../components/layout/layout'
-import Input from '../components/input/input'
 import Card from '../components/card/card'
 import Button from '../components/button/button'
 
 import Contacts from '../components/contacts/contacts'
 import { deleteAddress} from '../components/functions/functions'
 import { useState,useEffect } from 'react'
-/***
- * To implement search I would use a GET request using the url "localhost:3001/search?q='search'", where 'search' is some string returned by the search Input component. Then I would use setCards to display only the results of search. If search returns 0 results then I would use a snackbar message or div to tell the user there was nothing associated with that search term.
- * Alternatively, I could create a separate page to display all the results from search.
- * 
- * If I had more time, I would create an entry for userName in the redis database and on the frontend.
- * And use pagination to return all these results.
- * ***/
-export default function Home(  ) {
+import axios from 'axios'
+import Search from '../components/search'
+import Pagination from '../components/pagination'
 
+export default function Home(  ) {
   // get all cards
   const [cards, setCards] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //
   const [search, setSearch] = useState("");
+  // pagination
+  let postsPerPage = 5;
+  const [currPage, setCurrPage] = useState(1);
 
+  //get current page's cards
+  const indexOfLastCard = currPage * postsPerPage;
+  const indexOfFirstCard = indexOfLastCard - postsPerPage;
+  const currentPosts = cards.slice(indexOfFirstCard, indexOfLastCard); //slices out 5 posts
 
-  useEffect( () =>{
+  // runs whenever component mounts or updates
+  useEffect(() => {
+    //
     const fetchData = async () => {
-      setIsLoading(true);
+      setIsLoading(true); //in the process of fetching
       try {
-        const res = await fetch("http://localhost:3001/address-book/",);
-        const jsonData = await res.json();
-        setCards(jsonData);
+        const res = await axios.get("http://localhost:3001/address-book/");
+        setCards(res.data);
+        setIsLoading(false);
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
     };
 
     fetchData();
-    setIsLoading(false);
-  }, []);
- 
-  // to add a card 
-  const handleAdd = async (data) =>{
-    setCards((cards) => [...cards, data])
+  }, []); //[] only runs when it mounts
+
+  // Change page
+  const paginate = (pageNumber) => {
+    setCurrPage(pageNumber)
+  };
+
+  // to add a card
+  const handleAdd = async (data) => {
+    setCards((cards) => [...cards, data]);
   };
   // to delete cards
   const handleRemove = async (id) => {
-    const status = await deleteAddress(id);
     const newList = cards.filter((item) => item.id !== id);
     setCards(newList);
-  }
- 
-  const handleSearch = async (e) =>{
+  };
+
+  //search
+  const handleSearch = async (e) => {
     e.preventDefault();
     searchAddress(search);
   };
+  const exitSearch = () =>{
+    searchAddress();
+  }
   const searchAddress = async (searchTerm) => {
-    
     try {
       const res = await fetch(`http://localhost:3001/search?q=${searchTerm}`);
       const jsonData = await res.json();
       setCards(jsonData);
+      setCurrPage(1);
     } catch (error) {
       console.log(error.message);
     }
-  };
-  
 
-  
-      
+  };
+
   return (
     <Layout home>
       <Head>
         <title>Address Book</title>
       </Head>
-      <h1 className="mb-8">Address Book</h1>
-      <div className="w-full md:w-1/2">
-        <form className="search-bar">
-        <Input
-          icon="icon-search.svg"
-          label="Search"
-          func={e => {setSearch(e.target.value); }}
-          ></Input>
-          <button type="submit" onClick={handleSearch}></button>
-          </form>
+      <div className="lg:flex">
+        <Search setSearch={setSearch} handleSearch={handleSearch} />
+        <div className="w-full lg:ml-5 lg:w-1/2">
+          
+          <Card editState={false} addState={true} onAdd={handleAdd}>
+            <p className="text-lg">Add a new user's address</p>
+          </Card>
+        </div>
       </div>
-      <div className="mt-10">
-        <Card editState={false} addState={true} onAdd={handleAdd}>
-          <p className="text-lg">Add a new user's address</p>
-        </Card>
-
+      <div className="mt-4">
         {/* my list of contacts */}
-        <Contacts cards={cards} isLoading={isLoading} onRemove={handleRemove} />
-        
+        <Contacts
+          cards={currentPosts}
+          isLoading={isLoading}
+          onRemove={handleRemove}
+        />
+        {/* current={currPage} */}
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={cards.length}
+          paginate={paginate}
+          current={currPage}
+        />
       </div>
     </Layout>
-  )
+  );
 }

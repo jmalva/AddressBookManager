@@ -1,29 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 
 :root {
   --color-white: #ffffff;
-  --color-cobalt: #1878E0;
-  --color-cerulean: #0099D7;
-  --color-gray: #F8F9FA;
-  --color-grayfog: #EBEFF6;
-  --color-graydove: #C5D6E6;
+  --color-cobalt: #1878e0;
+  --color-cerulean: #0099d7;
+  --color-gray: #f8f9fa;
+  --color-grayfog: #ebeff6;
+  --color-graydove: #c5d6e6;
   --color-graymidnight: #324350;
   --color-grayshadow50: #416581;
-  --color-graysteel: #5F83A5;
-  --color-grayblue: #EAF0F7;
-  --color-error: #FF9E98;
-  --color-error-dark: #F76E40;
-  --box-shadow: 0px 5px 14px rgba(44, 67, 81, 0.13), 0px 0px 4px rgba(44, 67, 81, 0.02);
+  --color-graysteel: #5f83a5;
+  --color-grayblue: #eaf0f7;
+  --color-error: #ff9e98;
+  --color-error-dark: #f76e40;
+  --box-shadow: 0px 5px 14px rgba(44, 67, 81, 0.13),
+    0px 0px 4px rgba(44, 67, 81, 0.02);
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 16px;
 }
 
@@ -42,4 +43,24 @@ a {
 
 .search-bar {
   margin-bottom: -4rem;
+}
+.pageNav {
+  display: flex;
+  justify-content: center;
+}
+.pageNumbers li {
+  display: inline-flex;
+  cursor: pointer;
+  margin-right: 1rem;
+  border: 1px black solid;
+  padding: 1rem;
+  list-style: none;
+}
+
+.pageNumbers li.active {
+  cursor: default;
+  margin-right: 1rem;
+  border: 1px black solid;
+  opacity: 0.5;
+  padding: 1rem;
 }

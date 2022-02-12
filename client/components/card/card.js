@@ -23,7 +23,10 @@ export default function Card({children, editState, addState, onAdd, toggleEdit, 
       </div>
       <div >
         {addState ? 
+        <div className={`flex flex-wrap justify-between items-center`}>
+
             <Button variant="secondary" func={toggleAdd}>Add Address</Button>
+            </div>
         : 
           <>
             <Button variant="secondary" func={toggleEdit}>Edit</Button>

@@ -1,6 +1,7 @@
 .navbar {
   &__bar {
     border-bottom: 2px solid var(--color-grayblue);
+    display: flex;
   }
 
   &__menu {

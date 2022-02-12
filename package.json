@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "axios": "^0.21.4",
+    "netlify-cli": "^9.4.0"
+  }
+}
