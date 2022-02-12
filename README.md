@@ -1,6 +1,6 @@
 # Description
 
-Address controller complete with CRUD & a full-text search was implemented. This controller uses a redis instance as the database.
+The address controller is fully implemented complete with CRUD & a full-text search. This controller uses a redis instance as the database.
 The front-end is built with `next.js` and uses `Tailwind CSS` as it's utility library. 
 
 **Requirements**
