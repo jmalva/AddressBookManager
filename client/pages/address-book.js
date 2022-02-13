@@ -81,16 +81,12 @@ export default function Home(  ) {
       <Head>
         <title>Address Book</title>
       </Head>
-      <div className="lg:flex">
         <Search setSearch={setSearch} handleSearch={handleSearch} />
-        <div className="w-full lg:ml-5 lg:w-1/2">
           
           <Card editState={false} addState={true} onAdd={handleAdd}>
             <p className="text-lg">Add a new user's address</p>
           </Card>
-        </div>
-      </div>
-      <div className="mt-4">
+      <div className="mt-5">
         {/* my list of contacts */}
         <Contacts
           cards={currentPosts}
