@@ -63,8 +63,9 @@ export default function Home(  ) {
     e.preventDefault();
     searchAddress(search);
   };
-  const exitSearch = () =>{
-    searchAddress();
+  const clearSearch = () =>{
+    setSearch("");
+    searchAddress(search);
   }
   const searchAddress = async (searchTerm) => {
     try {
@@ -83,7 +84,7 @@ export default function Home(  ) {
       <Head>
         <title>Address Book</title>
       </Head>
-        <Search setSearch={setSearch} handleSearch={handleSearch} />
+        <Search setSearch={setSearch} searchTerm={search} handleSearch={handleSearch} clear={clearSearch} />
           
           <Card editState={false} addState={true} onAdd={handleAdd}>
             <p className="text-lg">Add a new user's address</p>
