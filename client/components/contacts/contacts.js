@@ -40,17 +40,15 @@ const AddressCard  = ({data, remove}) =>{
 const Contacts = ({cards, isLoading, onRemove}) => {
   
   return (
-     <>
-
-      {isLoading ? <DisplayCard>Loading..</DisplayCard> : 
-      cards?.map((item) => {
-        
-        return (
-          <AddressCard key={item.id} data={item} remove={onRemove}/>
-          )
-        }
-        )}
-    </> 
-  )
+    <div className="min-h-screen">
+      {isLoading ? (
+        <DisplayCard>Loading..</DisplayCard>
+      ) : (
+        cards?.map((item) => {
+          return <AddressCard key={item.id} data={item} remove={onRemove} />;
+        })
+      )}
+    </div>
+  );
 }
 export default Contacts;

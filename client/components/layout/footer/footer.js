@@ -2,17 +2,22 @@
   
 export default function Footer({children}) {
 
-  return(
+  return (
     <footer>
       <style jsx>
         {`
           footer {
             width: 100%;
-            height: 50px;
+            height: 25px;
             border-top: 1px solid #eaeaea;
             display: flex;
+            background: DarkOrchid;
             justify-content: center;
             align-items: center;
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            bottom: 0rem;
           }
           footer img {
             margin-left: 0.5rem;
@@ -26,6 +31,7 @@ export default function Footer({children}) {
             height: 1em;
           }
         `}
-      </style></footer>
+      </style>
+    </footer>
   );
 }
