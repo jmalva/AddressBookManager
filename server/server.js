@@ -36,7 +36,6 @@ app.get( '/address-book/:id', async ( req, res ) => {
 
 // add an address
 app.post( '/address-book', async ( req, res ) => {
-  console.log( 'Body:', req.body );
   try {
     // const {userName,line1,city, state} = req.body;
     // console.log(city,state)
@@ -56,7 +55,6 @@ app.post( '/address-book', async ( req, res ) => {
 
     const addrId = await addressController.add( address ); // returns ID
     const addrData = await addressController.get( addrId );
-    // console.log('waiting.', addrData)
     if ( addrId ) {
       res.send( addrData ); // send this data + new ID back to front-end
     }
@@ -67,7 +65,6 @@ app.post( '/address-book', async ( req, res ) => {
 
 // update an address
 app.put( '/address-book/:id', async ( req, res ) => {
-  // console.log('Body:', req.body)
 
   const addrId = req.params.id;
   const address = {

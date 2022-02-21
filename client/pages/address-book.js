@@ -53,6 +53,7 @@ export default function Home(  ) {
   };
   // to delete cards
   const handleRemove = async (id) => {
+    deleteAddress(id);
     const newList = cards.filter((item) => item.id !== id);
     setCards(newList);
   };
@@ -95,7 +96,7 @@ export default function Home(  ) {
         isLoading={isLoading}
         onRemove={handleRemove}
         />
-        : <DisplayCard>No Results to show!</DisplayCard>
+        : <DisplayCard>No results to show!</DisplayCard>
       }
         {/* current={currPage} */}
         <Pagination
