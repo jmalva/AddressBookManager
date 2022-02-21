@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Card from '../card/card'
+import DisplayCard from '../card/displaycard';
 
 const AddressCard  = ({data, remove}) =>{
   const [edit, setEdit] = useState(false); //toggles editState
@@ -29,8 +30,7 @@ const AddressCard  = ({data, remove}) =>{
       onEdit={saveValue}
     >
       <h3>{newData.userName}</h3>
-      <div className="max-w-md ">
-        {/* <div> */}
+      <div className="max-w-md">
         <p className="flow-text break-words">{` ${line2}, ${newData.city}, ${newData.state} ${newData.zip}`}</p>
       </div>
     </Card>
@@ -40,15 +40,17 @@ const AddressCard  = ({data, remove}) =>{
 const Contacts = ({cards, isLoading, onRemove}) => {
   
   return (
-    <>
-      {isLoading ? <div>Loading..</div> : cards?.map((item) => {
+     <>
+
+      {isLoading ? <DisplayCard>Loading..</DisplayCard> : 
+      cards?.map((item) => {
         
         return (
           <AddressCard key={item.id} data={item} remove={onRemove}/>
-        )
-      }
-      )}
-    </>
+          )
+        }
+        )}
+    </> 
   )
 }
 export default Contacts;

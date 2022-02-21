@@ -9,6 +9,7 @@ import { useState,useEffect } from 'react'
 import axios from 'axios'
 import Search from '../components/search'
 import Pagination from '../components/pagination'
+import DisplayCard from '../components/card/displaycard'
 
 export default function Home(  ) {
   // get all cards
@@ -22,7 +23,7 @@ export default function Home(  ) {
   //get current page's cards
   const indexOfLastCard = currPage * postsPerPage;
   const indexOfFirstCard = indexOfLastCard - postsPerPage;
-  const currentPosts = cards.slice(indexOfFirstCard, indexOfLastCard); //slices out 5 posts
+  const currentPosts = cards.length ? cards.slice(indexOfFirstCard, indexOfLastCard) : 0; //slices out 5 posts
 
   // runs whenever component mounts or updates
   useEffect(() => {
@@ -88,11 +89,14 @@ export default function Home(  ) {
           </Card>
       <div className="mt-5">
         {/* my list of contacts */}
+        {cards.length ? 
         <Contacts
-          cards={currentPosts}
-          isLoading={isLoading}
-          onRemove={handleRemove}
+        cards={currentPosts}
+        isLoading={isLoading}
+        onRemove={handleRemove}
         />
+        : <DisplayCard>No Results to show!</DisplayCard>
+      }
         {/* current={currPage} */}
         <Pagination
           postsPerPage={postsPerPage}
